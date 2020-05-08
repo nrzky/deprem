@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet } from 'react-native';
+import { TextInput, FlatList } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
+import { ListItem, IconButton } from '../components';
 
 function Search() {
   return (
@@ -9,10 +10,20 @@ function Search() {
       <View style={styles.headerView}>
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>Arama Yap</Text>
-        <TextInput style={styles.textInput} />
+        <View style={styles.inputView}>
+          <TextInput style={styles.textInput} />
+          <IconButton
+            name="magnify"
+            color={Colors.primary}
+          />
+        </View>
       </View>
       <View style={styles.contentView}>
-
+        <FlatList
+          data={[1, 2, 3, 4, 5, 6, 7]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={() => <ListItem />}
+        />
       </View>
     </View>
   );
@@ -40,9 +51,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.white,
   },
-  textInput: {
+  inputView: {
+    flexDirection: 'row',
     backgroundColor: Colors.white,
-    padding: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     position: 'absolute',
     width: 300,
     bottom: -30,
@@ -53,9 +66,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
+  textInput: {
+    width: '90%',
+  },
   contentView: {
     flex: 1,
     backgroundColor: Colors.white,
-    zIndex: -1
+    zIndex: -1,
+    paddingTop: 40,
   }
 });
