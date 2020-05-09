@@ -6,22 +6,19 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function IconButton(props) {
   return (
-    <View style={props.style}>
-      <TouchableWithoutFeedback {...props}>
-        <Icon
-          name={props.name}
-          size={props.size}
-          color={props.color}
-        />
-      </TouchableWithoutFeedback>
-    </View>
+    <Icon {...props}
+      style={props.style}
+      name={props.name}
+      size={props.size}
+      color={props.color}
+    />
   );
 }
 
 IconButton.defaultProps = {
   name: 'filter',
   size: 30,
-  color: Colors.white,
+  color: Colors.black,
 }
 
 export default IconButton;

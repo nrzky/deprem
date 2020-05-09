@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, FlatList } from 'react-native-gesture-handler';
+import Axios from 'axios';
 import Colors from '../constants/Colors';
 import { ListItem, IconButton } from '../components';
 
 function Search() {
+  const [searchResult, setResult] = useState([]);
+
+  _searchData = async () => {
+    await Axios.get('https://api.orhanaydogdu.com.tr/deprem/live.php?limit=100')
+      .then(res => setResult(res.data.result))
+      .catch(err => alert(err));
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
+        <IconButton
+          name="filter"
+          style={{ position: 'absolute', zIndex: 100, top: 50, right: 20 }}
+          color={Colors.white}
+        />
+
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>Arama Yap</Text>
         <View style={styles.inputView}>
           <TextInput style={styles.textInput} />
           <IconButton
+            onPress={_searchData}
             name="magnify"
             color={Colors.primary}
           />
@@ -20,9 +35,13 @@ function Search() {
       </View>
       <View style={styles.contentView}>
         <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7]}
+          data={searchResult}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={() => <ListItem />}
+          renderItem={({ item }) => <ListItem
+            title={item.title}
+            mag={item.mag}
+            date={item.date}
+          />}
         />
       </View>
     </View>

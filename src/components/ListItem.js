@@ -6,12 +6,17 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function ListItem(props) {
   return (
-    <TouchableWithoutFeedback onPress={() => alert('test')}>
+    <TouchableWithoutFeedback {...props}>
       <View style={styles.container}>
         <Icon name="clipboard-pulse" size={30} color={Colors.success} />
         <View style={styles.textView}>
           <Text style={styles.titleText}>{props.title}</Text>
-          <Text style={styles.subtitleText}>{props.subtitle}</Text>
+          <Text style={styles.subtitleText}>Şiddet:
+            <Text style={styles.detailText}>{props.mag}</Text>
+          </Text>
+          <Text style={styles.subtitleText}>Tarih:
+            <Text style={styles.detailText}>{props.date}</Text>
+          </Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   textView: {
+    flex: 1,
     marginLeft: 10,
   },
   titleText: {
@@ -50,5 +56,12 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 2,
+  },
+  detailText: {
+    fontSize: 12,
+    fontWeight: 'normal',
+    color: Colors.primary,
   }
 });
