@@ -11,7 +11,7 @@ function QuakeDetail({ route, navigation }) {
         <IconButton
           onPress={() => navigation.goBack()}
           name="arrow-left"
-          style={{ position: 'absolute', top: 25, left: 10 }}
+          style={{ position: 'absolute', zIndex: 200, top: 25, left: 10 }}
           color={Colors.white}
         />
 
@@ -19,6 +19,7 @@ function QuakeDetail({ route, navigation }) {
         <Text style={styles.subtitleText}>{route.params.item.title}</Text>
         <View style={[styles.inputView, { right: 50 }]}>
           <IconButton
+            onPress={() => navigation.navigate('MapDetail')}
             name="map-marker"
             color={Colors.success}
             size={40}

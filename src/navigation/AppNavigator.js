@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Home, Search, QuakeDetail } from '../views';
+import { Home, Search, QuakeDetail, MapDetail } from '../views';
 import Colors from '../constants/Colors';
 
 const Stack = createStackNavigator();
@@ -47,6 +47,11 @@ function AppNavigator() {
       <Stack.Screen
         name="QuakeDetail"
         component={QuakeDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MapDetail"
+        component={MapDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
