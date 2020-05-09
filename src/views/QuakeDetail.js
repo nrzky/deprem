@@ -19,7 +19,7 @@ function QuakeDetail({ route, navigation }) {
         <Text style={styles.subtitleText}>{route.params.item.title}</Text>
         <View style={[styles.inputView, { right: 50 }]}>
           <IconButton
-            onPress={() => navigation.navigate('MapDetail')}
+            onPress={() => navigation.navigate('MapDetail', { item: route.params.item })}
             name="map-marker"
             color={Colors.success}
             size={40}
