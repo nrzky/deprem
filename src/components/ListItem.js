@@ -3,10 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../constants/Colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Touchable from './Touchable';
 
 function ListItem(props) {
   return (
-    <TouchableWithoutFeedback {...props}>
+    <Touchable {...props}>
       <View style={styles.container}>
         <Icon name="clipboard-pulse" size={30} color={Colors.success} />
         <View style={styles.textView}>
@@ -19,7 +20,7 @@ function ListItem(props) {
           </Text>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </Touchable>
   );
 }
 

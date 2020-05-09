@@ -3,56 +3,44 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, FlatList } from 'react-native-gesture-handler';
 import Axios from 'axios';
 import Colors from '../constants/Colors';
-import { ListItem, IconButton } from '../components';
+import { ListItem, IconButton, Touchable } from '../components';
 
-function Search() {
-  const [searchResult, setResult] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  fetchData = async () => {
-    await Axios.get('https://api.orhanaydogdu.com.tr/deprem/live.php?limit=100')
-      .then(res => setResult(res.data.result))
-      .catch(err => alert(err));
-  }
+function QuakeDetail({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
         <IconButton
-          name="filter"
-          style={{ position: 'absolute', top: 20, right: 10 }}
+          onPress={() => navigation.goBack()}
+          name="arrow-left"
+          style={{ position: 'absolute', top: 25, left: 10 }}
           color={Colors.white}
         />
 
         <Text style={styles.titleText}>Deprem</Text>
-        <Text style={styles.subtitleText}>Arama Yap</Text>
-        <View style={styles.inputView}>
-          <TextInput style={styles.textInput} />
+        <Text style={styles.subtitleText}>{route.params.item.title}</Text>
+        <View style={[styles.inputView, { right: 50 }]}>
           <IconButton
-            onPress={fetchData}
-            name="magnify"
-            color={Colors.primary}
+            name="map-marker"
+            color={Colors.success}
+            size={40}
+          />
+        </View>
+        <View style={[styles.inputView, { left: 50 }]}>
+          <IconButton
+            name="share-variant"
+            color={Colors.success}
+            size={40}
           />
         </View>
       </View>
       <View style={styles.contentView}>
-        <FlatList
-          data={searchResult}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <ListItem
-            title={item.title}
-            mag={item.mag}
-            date={item.date}
-          />}
-        />
+
       </View>
     </View>
   );
 }
 
-export default Search;
+export default QuakeDetail;
 
 const styles = StyleSheet.create({
   container: {
@@ -77,21 +65,17 @@ const styles = StyleSheet.create({
   inputView: {
     flexDirection: 'row',
     backgroundColor: Colors.white,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     position: 'absolute',
-    width: 300,
-    bottom: -30,
+    bottom: -40,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 100,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 5,
-  },
-  textInput: {
-    width: '90%',
   },
   contentView: {
     flex: 1,
