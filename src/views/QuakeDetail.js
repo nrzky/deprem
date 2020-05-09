@@ -17,7 +17,7 @@ function QuakeDetail({ route, navigation }) {
 
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>{route.params.item.title}</Text>
-        <View style={[styles.inputView]}>
+        <View style={[styles.buttonView]}>
           <IconButton
             onPress={() => navigation.navigate('MapDetail', { item: route.params.item })}
             name="map-marker"
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.white,
   },
-  inputView: {
+  buttonView: {
     flexDirection: 'row',
     backgroundColor: Colors.white,
     paddingVertical: 15,

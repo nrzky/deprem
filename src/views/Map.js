@@ -29,6 +29,14 @@ function MapDetail({ route, navigation }) {
       <View style={styles.headerView}>
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>Harita</Text>
+        <View style={[styles.buttonView]}>
+          <IconButton
+            onPress={fetchData}
+            name="refresh"
+            color={Colors.success}
+            size={40}
+          />
+        </View>
       </View>
       <View style={styles.contentView}>
         <MapView
@@ -85,11 +93,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.white,
   },
+  buttonView: {
+    flexDirection: 'row',
+    backgroundColor: Colors.white,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    position: 'absolute',
+    bottom: -40,
+    alignItems: 'center',
+    borderRadius: 100,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+  },
   contentView: {
     height: Dimensions.get('window').height - 250,
     width: 400,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    zIndex: -1,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
