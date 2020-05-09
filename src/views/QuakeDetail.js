@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { TextInput, FlatList } from 'react-native-gesture-handler';
-import Axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import { ListItem, IconButton, Touchable } from '../components';
+import { IconButton, QuakeItem } from '../components';
 
 function QuakeDetail({ route, navigation }) {
   return (
@@ -33,9 +32,38 @@ function QuakeDetail({ route, navigation }) {
           />
         </View>
       </View>
-      <View style={styles.contentView}>
-
-      </View>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentView}>
+        <QuakeItem
+          name="map-marker"
+          title="Deprem Konumu"
+          detail={route.params.item.lokasyon}
+        />
+        <QuakeItem
+          name="clipboard-pulse"
+          title="Deprem Şiddeti"
+          detail={route.params.item.mag}
+        />
+        <QuakeItem
+          name="calendar"
+          title="Deprem Zamanı"
+          detail={route.params.item.date}
+        />
+        <QuakeItem
+          name="tape-measure"
+          title="Deprem Derinliği"
+          detail={route.params.item.depth}
+        />
+        <QuakeItem
+          name="arrow-split-vertical"
+          title="Deprem Enlemi"
+          detail={route.params.item.lat}
+        />
+        <QuakeItem
+          name="arrow-split-horizontal"
+          title="Deprem Boylamı"
+          detail={route.params.item.lng}
+        />
+      </ScrollView>
     </View>
   );
 }
@@ -78,9 +106,15 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   contentView: {
-    flex: 1,
+    flexGrow: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     backgroundColor: Colors.white,
     zIndex: -1,
-    paddingTop: 40,
-  }
+    paddingTop: 50,
+  },
+  scrollView: {
+    zIndex: -1,
+    backgroundColor: Colors.white
+  },
 });
