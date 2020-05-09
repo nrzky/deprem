@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Home, Search, QuakeDetail, MapDetail } from '../views';
+import { Home, QuakeDetail, MapDetail, Map } from '../views';
 import Colors from '../constants/Colors';
 
 const Stack = createStackNavigator();
@@ -25,11 +25,11 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="Map"
+        component={Map}
         options={{
-          tabBarIcon: ({ color, size }) => (<Icon name="magnify" size={size} color={color} />),
-          tabBarLabel: 'Arama Yap',
+          tabBarIcon: ({ color, size }) => (<Icon name="map-marker" size={size} color={color} />),
+          tabBarLabel: 'Harita',
         }}
       />
     </Tab.Navigator>

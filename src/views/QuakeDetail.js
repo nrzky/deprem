@@ -17,17 +17,10 @@ function QuakeDetail({ route, navigation }) {
 
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>{route.params.item.title}</Text>
-        <View style={[styles.inputView, { right: 50 }]}>
+        <View style={[styles.inputView]}>
           <IconButton
             onPress={() => navigation.navigate('MapDetail', { item: route.params.item })}
             name="map-marker"
-            color={Colors.success}
-            size={40}
-          />
-        </View>
-        <View style={[styles.inputView, { left: 50 }]}>
-          <IconButton
-            name="share-variant"
             color={Colors.success}
             size={40}
           />
