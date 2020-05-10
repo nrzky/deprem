@@ -3,17 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, FlatList } from 'react-native-gesture-handler';
 import Axios from 'axios';
 import Colors from '../constants/Colors';
-import { ListItem, IconButton } from '../components';
+import { ListItem, IconButton, Loading } from '../components';
 
 function Search({ navigation }) {
   const [searchResult, setResult] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   fetchData = async (callback) => {
+    setLoading(true);
     await Axios.get('https://api.orhanaydogdu.com.tr/deprem/live.php?limit=100')
       .then(res => {
         setResult(res.data.result);
@@ -22,7 +24,8 @@ function Search({ navigation }) {
           callback(res.data.result);
         }
       })
-      .catch(err => alert(err));
+      .catch(err => alert(err))
+      .finally(() => setLoading(false));
   }
 
   searchData = async () => {
@@ -51,7 +54,7 @@ function Search({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={keyword}
-            onChangeText={value => setKeyword(value.toUpperCase())}
+            onChangeText={value => setKeyword(value)}
             placeholder="Bölge Giriniz"
           />
           <IconButton
@@ -62,16 +65,22 @@ function Search({ navigation }) {
         </View>
       </View>
       <View style={styles.contentView}>
-        <FlatList
-          data={searchResult}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <ListItem
-            onPress={() => navigation.navigate('QuakeDetail', { item: item })}
-            title={item.title}
-            mag={item.mag}
-            date={item.date}
-          />}
-        />
+        {
+          loading ? <Loading
+            title="Depremler Yükleniyor"
+            subtitle="Deprem verileri yükleniyor. Lütfen bekleyiniz."
+          /> :
+            <FlatList
+              data={searchResult}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => <ListItem
+                onPress={() => navigation.navigate('QuakeDetail', { item: item })}
+                title={item.title}
+                mag={item.mag}
+                date={item.date}
+              />}
+            />
+        }
       </View>
     </View>
   );
