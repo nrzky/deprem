@@ -49,7 +49,7 @@ function Search({ navigation }) {
     <View style={styles.container}>
       <View style={styles.headerView}>
         <Text style={styles.titleText}>Deprem</Text>
-        <Text style={styles.subtitleText}>Kandilli Rasathanesinden Anlık Veriler</Text>
+        <Text style={styles.subtitleText}>Kandilli Rasathanesi'nden Anlık Veriler</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput}

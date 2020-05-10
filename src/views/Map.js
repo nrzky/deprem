@@ -28,7 +28,7 @@ function MapDetail({ route, navigation }) {
     <View>
       <View style={styles.headerView}>
         <Text style={styles.titleText}>Deprem</Text>
-        <Text style={styles.subtitleText}>Harita</Text>
+        <Text style={styles.subtitleText}>Güncel Deprem Haritası</Text>
         <View style={[styles.buttonView]}>
           <IconButton
             onPress={fetchData}
