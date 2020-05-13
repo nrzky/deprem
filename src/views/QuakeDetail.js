@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import { IconButton, QuakeItem } from '../components';
+import { IconButton, QuakeItem, Touchable } from '../components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function QuakeDetail({ route, navigation }) {
   return (
@@ -17,14 +18,13 @@ function QuakeDetail({ route, navigation }) {
 
         <Text style={styles.titleText}>Deprem</Text>
         <Text style={styles.subtitleText}>{route.params.item.title}</Text>
-        <View style={[styles.buttonView]}>
-          <IconButton
-            onPress={() => navigation.navigate('MapDetail', { item: route.params.item })}
+        <Touchable style={styles.buttonView} onPress={() => navigation.navigate('MapDetail', { item: route.params.item })}>
+          <Icon
             name="map-marker"
             color={Colors.success}
             size={40}
           />
-        </View>
+        </Touchable>
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentView}>
         <QuakeItem
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 5,
+    zIndex: 1,
   },
   contentView: {
     flexGrow: 1,

@@ -7,8 +7,8 @@ import Touchable from './Touchable';
 
 function IconButton(props) {
   return (
-    <Touchable style={props.style}>
-      <Icon {...props}
+    <Touchable {...props} style={{ ...props.style}}>
+      <Icon
         name={props.name}
         size={props.size}
         color={props.color}

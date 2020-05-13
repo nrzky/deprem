@@ -27,14 +27,14 @@ function Touchable(props) {
   }
 
   return (
-    <Animated.View style={{ ...props.style, transform: [{ scale: animation }] }}>
-      <TouchableWithoutFeedback
-        onPressIn={animationStart}
-        onPressOut={animationStop}
-        {...props}>
+    <TouchableWithoutFeedback
+      onPressIn={animationStart}
+      onPressOut={animationStop}
+      {...props}>
+      <Animated.View style={{ ...props.style, transform: [{ scale: animation }] }}>
         {props.children}
-      </TouchableWithoutFeedback>
-    </Animated.View>
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 }
 
