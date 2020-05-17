@@ -12,7 +12,7 @@ function QuakeDetail({ route, navigation }) {
         <IconButton
           onPress={() => navigation.goBack()}
           name="arrow-left"
-          style={{ position: 'absolute', zIndex: 200, top: 25, left: 10 }}
+          style={styles.backIconButton}
           color={Colors.white}
         />
 
@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
     height: 250,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backIconButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 50,
+    left: 10,
   },
   titleText: {
     fontSize: 30,
