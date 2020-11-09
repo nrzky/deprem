@@ -32,7 +32,7 @@ function Search({navigation}) {
       .finally(() => setLoading(false));
   };
 
-  searchData = async () => {
+  searchData = () => {
     fetchData().then((response) => {
       let result = [];
       const text = keyword.toUpperCase();
