@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TextInput, FlatList } from 'react-native-gesture-handler';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {TextInput, FlatList} from 'react-native-gesture-handler';
 import Axios from 'axios';
 import Colors from '../constants/Colors';
-import { ListItem, IconButton, Loading } from '../components';
+import {ListItem, IconButton, Loading} from '../components';
 
-function Search({ navigation }) {
+const ITEM_HEIGHT = 95;
+
+function Search({navigation}) {
   const [searchResult, setResult] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,47 +16,74 @@ function Search({ navigation }) {
     fetchData();
   }, []);
 
-  fetchData = async (callback) => {
+  fetchData = () => {
     setLoading(true);
-    await Axios.get('https://api.orhanaydogdu.com.tr/deprem/live.php?limit=100')
-      .then(res => {
+    return Axios.get(
+      'https://api.orhanaydogdu.com.tr/deprem/live.php?limit=100',
+    )
+      .then((res) => {
         setResult(res.data.result);
-
-        if (typeof callback === 'function') {
-          callback(res.data.result);
-        }
+        return res.data.result;
       })
-      .catch(err => alert(err))
+      .catch((err) => {
+        alert(err);
+        return err;
+      })
       .finally(() => setLoading(false));
-  }
+  };
 
-  searchData = async () => {
-    await fetchData(response => {
+  searchData = () => {
+    fetchData().then((response) => {
       let result = [];
       const text = keyword.toUpperCase();
       if (text != '') {
-        response.map(element => {
+        response.map((element) => {
           if (element.title.includes(text)) {
             result.push(element);
           }
-        })
+        });
       } else {
         result = response;
       }
       setResult(result);
     });
-  }
+  };
+
+  const renderItem = useCallback(
+    ({item}) => (
+      <ListItem
+        onPress={() => navigation.navigate('QuakeDetail', {item: item})}
+        title={item.title}
+        mag={item.mag}
+        date={item.date}
+      />
+    ),
+    [],
+  );
+
+  const getItemLayout = useCallback(
+    (_, index) => ({
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    }),
+    [],
+  );
+
+  const keyExtractor = useCallback((_, index) => index.toString(), []);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
         <Text style={styles.titleText}>Deprem</Text>
-        <Text style={styles.subtitleText}>Kandilli Rasathanesi'nden Anlık Veriler</Text>
+        <Text style={styles.subtitleText}>
+          Kandilli Rasathanesi'nden Anlık Veriler
+        </Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput}
             value={keyword}
-            onChangeText={value => setKeyword(value)}
+            onChangeText={(value) => setKeyword(value)}
             placeholder="Bölge Giriniz"
           />
           <IconButton
@@ -65,22 +94,20 @@ function Search({ navigation }) {
         </View>
       </View>
       <View style={styles.contentView}>
-        {
-          loading ? <Loading
+        {loading ? (
+          <Loading
             title="Depremler Yükleniyor"
             subtitle="Deprem verileri yükleniyor. Lütfen bekleyiniz."
-          /> :
-            <FlatList
-              data={searchResult}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => <ListItem
-                onPress={() => navigation.navigate('QuakeDetail', { item: item })}
-                title={item.title}
-                mag={item.mag}
-                date={item.date}
-              />}
-            />
-        }
+          />
+        ) : (
+          <FlatList
+            data={searchResult}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            getItemLayout={getItemLayout}
+            maxToRenderPerBatch={5}
+          />
+        )}
       </View>
     </View>
   );
@@ -119,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 5,
@@ -133,5 +160,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     zIndex: -1,
     paddingTop: 40,
-  }
+  },
 });
